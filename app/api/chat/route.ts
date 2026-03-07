@@ -3,12 +3,14 @@ import { createClient } from '@/lib/supabase/server'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 
+export const runtime = "nodejs"
+
 export async function POST(req: Request) {
   try {
     const { messages, chatId } = await req.json()
 
     // Verifikasi user
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
