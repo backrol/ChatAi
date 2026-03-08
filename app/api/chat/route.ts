@@ -10,8 +10,7 @@ export async function POST(req: Request) {
     const { messages, chatId } = await req.json()
 
     // Verifikasi user
-    const cookieStore = await cookies()
-    const supabase = createClient(cookieStore)
+    const supabase = createClient(cookies())
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
       return new Response('Unauthorized', { status: 401 })
